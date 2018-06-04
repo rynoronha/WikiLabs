@@ -7,7 +7,6 @@ const sequelize = require("../../src/db/models/index").sequelize;
 describe("routes : users", () => {
 
   beforeEach((done) => {
-
     sequelize.sync({force: true})
     .then(() => {
       done();
@@ -16,7 +15,6 @@ describe("routes : users", () => {
       console.log(err);
       done();
     });
-
   });
 
   describe("GET /users/sign_up", () => {
