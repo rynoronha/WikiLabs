@@ -1,0 +1,16 @@
+body {
+  padding-top: 54px;
+}
+
+.lead {
+  text-align: center;
+}
+
+.card-text {
+  text-align: center;
+}
+
+.display-3 {
+  text-align: center;
+  font-weight: bold;
+}
