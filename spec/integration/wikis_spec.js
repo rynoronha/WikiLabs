@@ -62,10 +62,10 @@ describe("routes : wikis", () => {
 
     it("should create a new wiki and redirect", (done) => {
       const options = {
-        url: `${base}create`,
+        url: `${base}/create`,
         form: {
-          title: "blink-182 songs",
-          body: "What's your favorite blink-182 song?",
+          title: "Classical Music",
+          body: "The greatest classical composers",
           private: false,
           userId: this.user.id
         }
@@ -74,10 +74,10 @@ describe("routes : wikis", () => {
         (err, res, body) => {
           console.log("wikis_spec2 "+res);
           console.log("wikis_spec3 "+body);
-          Wiki.findOne({where: {title: "blink-182 songs"}})
+          Wiki.findOne({where: {title: "Classical Music"}})
           .then((wiki) => {
-            expect(wiki.title).toBe("blink-182 songs");
-            expect(wiki.body).toBe("What's your favorite blink-182 song?");
+            expect(wiki.title).toBe("Classical Music");
+            expect(wiki.body).toBe("The greatest classical composers");
             done();
           })
           .catch((err) => {
