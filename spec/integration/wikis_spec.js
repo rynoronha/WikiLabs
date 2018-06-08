@@ -80,9 +80,6 @@ describe("routes : wikis", () => {
           };
           request.post(options,
             (err, res, body) => {
-              console.log('title' + body.title);
-              console.log('body' + body);
-              console.log('res' + res);
               Wiki.findOne({where: {title: "Classical Music"}})
               .then((wiki) => {
                 expect(wiki.title).toBe("Classical Music");

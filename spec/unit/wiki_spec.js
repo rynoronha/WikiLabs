@@ -28,12 +28,14 @@ describe("Wiki", () => {
       Wiki.create({
         title: "First Wiki",
         body: "This is my first wiki.",
-        private: false
+        private: false,
+        userId: this.user.id
       })
       .then((wiki) => {
         expect(wiki.title).toBe("First Wiki");
         expect(wiki.body).toBe("This is my first wiki.");
         expect(wiki.private).toBe(false);
+        expect(wiki.userId).toBe(this.user.id);
         done();
       })
       .catch((err) => {
@@ -46,13 +48,15 @@ describe("Wiki", () => {
       Wiki.create({
         title: "First Wiki",
         body: "This is my first wiki.",
-        private: true
+        private: true,
+        userId: this.user.id
       })
       .then((wiki) => {
         Wiki.create({
             title: "First Wiki",
             body: "This is not my first Wiki.",
-            private: true
+            private: true,
+            userId: this.user.id
         })
         .then((wiki) => {
           // the code in this block will not be evaluated since the validation error
@@ -74,7 +78,8 @@ describe("Wiki", () => {
 
     it("should not create a wiki with missing title or body", (done) => {
       Wiki.create({
-        title: "First Wiki"
+        title: "First Wiki",
+        userId: this.user.id
       })
       .then((wiki) => {
 
