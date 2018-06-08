@@ -24,7 +24,8 @@ describe("routes : wikis", () => {
         Wiki.create({
           title: "007 Movies",
           body: "Everything about James Bond movies.",
-          userId: user.id
+          private: false,
+          userId: this.user.id
         })
         .then((wiki) => {
           this.wiki = wiki;
@@ -60,33 +61,119 @@ describe("routes : wikis", () => {
 
   describe("POST /wikis/create", () => {
 
-    it("should create a new wiki and redirect", (done) => {
-      const options = {
-        url: `${base}/create`,
-        form: {
-          title: "Classical Music",
-          body: "The greatest classical composers",
-          private: false,
-          userId: this.user.id
-        }
-      };
-      request.post(options,
-        (err, res, body) => {
-          console.log("wikis_spec2 "+res);
-          console.log("wikis_spec3 "+body);
-          Wiki.findOne({where: {title: "Classical Music"}})
-          .then((wiki) => {
-            expect(wiki.title).toBe("Classical Music");
-            expect(wiki.body).toBe("The greatest classical composers");
+      it("should create a new wiki and redirect", (done) => {
+
+        User.create({
+          name: "Clark Kent",
+          email: "clark@superman.com",
+          password: "superman"
+        })
+        .then((user) => {
+          const options = {
+            url: `${base}/create`,
+            form: {
+              title: "Classical Music",
+              body: "The greatest classical composers",
+              private: false,
+              userId: user.id
+            }
+          };
+          request.post(options,
+            (err, res, body) => {
+              console.log('title' + body.title);
+              console.log('body' + body);
+              console.log('res' + res);
+              Wiki.findOne({where: {title: "Classical Music"}})
+              .then((wiki) => {
+                expect(wiki.title).toBe("Classical Music");
+                expect(wiki.body).toBe("The greatest classical composers");
+                done();
+              })
+              .catch((err) => {
+                console.log(err);
+                done();
+              });
+            }
+          );
+      });
+    });
+  });
+
+  describe("GET /wikis/:id", () => {
+
+   it("should render a view with the selected wiki", (done) => {
+     request.get(`${base}/${this.wiki.id}`, (err, res, body) => {
+       expect(err).toBeNull();
+       expect(body).toContain("007 Movies");
+       done();
+     });
+   });
+
+  });
+
+  describe("POST /wikis/:id/destroy", () => {
+
+    it("should delete the wiki with the associated ID", (done) => {
+      Wiki.all()
+      .then((wikis) => {
+        const wikiCountBeforeDelete = wikis.length;
+        expect(wikiCountBeforeDelete).toBe(1);
+        request.post(`${base}/${this.wiki.id}/destroy`, (err, res, body) => {
+          Wiki.all()
+          .then((wikis) => {
+            expect(err).toBeNull();
+            expect(wikis.length).toBe(wikiCountBeforeDelete - 1);
             done();
           })
           .catch((err) => {
             console.log(err);
             done();
-          });
-        }
-      );
+          })
+        });
+      })
     });
+
+  });
+
+  describe("GET /wikis/:id/edit", () => {
+
+    it("should render a view with an edit wiki form", (done) => {
+      request.get(`${base}/${this.wiki.id}/edit`, (err, res, body) => {
+        expect(err).toBeNull();
+        expect(body).toContain("Edit Wiki");
+        expect(body).toContain("Everything about James Bond movies.");
+        done();
+      });
+    });
+
+  });
+
+  describe("POST /wikis/:id/update", () => {
+
+    it("should update the wiki with the given values", (done) => {
+      request.post({
+        url: `${base}/${this.wiki.id}/update`,
+        form: {
+          title: "007 Films",
+          body: "The greatest film series ever made",
+          userId: this.user.id
+        }
+      }, (err, res, body) => {
+        expect(err).toBeNull();
+        Wiki.findOne({
+          where: {id:1}
+        })
+        .then((wiki) => {
+          expect(wiki.title).toBe("007 Films");
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
+    });
+
   });
 
 });
