@@ -37,7 +37,7 @@ describe("routes : users", () => {
             expect(user).not.toBeNull();
             expect(user.name).toBe("User");
             expect(user.email).toBe("user@example.com");
-            expect(user.id).toBe(1);
+            expect(typeof user.id).toBe("number");
             done();
           })
           .catch((err) => {

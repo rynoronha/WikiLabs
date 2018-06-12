@@ -1,3 +1,5 @@
+const passport = require("passport");
+
 'use strict';
 
 const faker = require("faker");
@@ -41,6 +43,7 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    
     return queryInterface.bulkInsert("Users", users, {});
   },
 

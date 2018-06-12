@@ -1,5 +1,8 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
+const keySecret = process.env.SECRET_KEY;
+const keyPublishable = process.env.PUBLISHABLE_KEY;
+var stripe = require("stripe")(keySecret);
 
 module.exports = {
 
@@ -49,6 +52,39 @@ module.exports = {
      req.logout();
      req.flash("notice", "You've successfully signed out!");
      res.redirect("/");
+  },
+
+  upgrade(req, res, next){
+    res.render("users/upgrade", {keyPublishable});
+    console.log("keyPublishable " + keyPublishable);
+  },
+
+  payment(req, res, next){
+    let amount = 1500;
+    stripe.customers.create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken
+    })
+    .then((customer) => {
+      stripe.charges.create({
+        amount,
+        description: "Premium Membership",
+        currency: "usd",
+        customer: customer.id
+      })
+    })
+    .then((charge) => {
+      userQueries.upgrade(req.user.id);
+      console.log("req.user.id " + req.user.id);
+      res.render("users/success");
+    });
+  },
+
+  downgrade(req, res, next){
+    console.log("req.user.id " + req.user.id);
+    userQueries.downgrade(req.user.id);
+    req.flash("notice", "You have successfully downgraded");
+    res.redirect("/");
   }
 
 }

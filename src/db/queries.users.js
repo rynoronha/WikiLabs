@@ -23,11 +23,43 @@ module.exports = {
         html: '<strong>Please login to your account to start creating wikis!</strong>',
       };
       sgMail.send(msg);
+      console.log("hello");
       callback(null, user);
     })
     .catch((err) => {
+      console.log('error', error);
+      console.log("hello");
       callback(err);
     })
+  },
+
+  upgrade(id, callback){
+    return User.findById(id)
+    .then((user) => {
+      if(!user){
+        return callback("User not found");
+      }
+      return user.update({ role: 1 })
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err);
+    });
+  },
+
+  downgrade(id, callback){
+    return User.findById(id)
+    .then((user) => {
+      if(!user){
+        return callback("User not found");
+      }
+      return user.update({ role: 0 })
+    })
+    .catch((err) => {
+      console.log(err);
+      callback(err);
+    });
   }
+
 
 }

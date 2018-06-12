@@ -1,20 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#">Blocipedia</a>
+    <a class="navbar-brand" href="/">Blocipedia</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
+        <% if(currentUser) { %>
+          <% if(currentUser.role == 0) { %>
+            <li class="nav-item">
+             <a class="nav-link text-white" href="/wikis"><%= currentUser.name %></a>
+            </li>
+          <% } else if(currentUser.role == 1) { %>
+            <li class="nav-item">
+             <a class="nav-link text-warning" href="/wikis"><%= currentUser.name %> (Premium)</a>
+            </li>
+          <% } %>
+        <% } %>
         <li class="nav-item">
          <a class="nav-link" href="/wikis">Wikis</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/">Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
         <% if(currentUser) { %>
+            <% if(currentUser.role == 0) { %>
+           <li class="nav-item">
+             <a class="nav-link" href="/users/upgrade">Upgrade to Premium</a>
+           </li>
+           <% } else if(currentUser.role == 1) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/downgrade">Downgrade to Standard</a>
+            </li>
+            <% } %>
            <li class="nav-item">
              <a class="nav-link" href="/users/sign_out">Sign out</a>
            </li>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+
+      <% include ../static/partials/navbar.ejs %>
+
+      <main class="container">
+        <% include ../static/partials/messages.ejs %>
+
+        <div class="alert alert-success" role="alert">
+          <p class="text-center">
+          You have successfully paid <strong>$15.00</strong>!
+          </p>
+          <p class="text-center">
+          You are now a <strong>Premium</strong> member
+          </p>
+       </div>
+
+        <div class="text-center">
+          <a href="/wikis" class="btn btn-primary btn-lg">Wikis</a>
+        </div>
+
+      </main>
+
+      <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <% include ../static/partials/head.ejs %>
+
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+        <% include ../static/partials/messages.ejs %>
+        <% if(currentUser) { %>
+            <% if(currentUser.role == 0) { %>
+              <header class="jumbotron my-5">
+                <h1 class="display-4">Become a Premium Member</h1>
+                <p class="lead">Unlimited private wikis</p>
+                <p class="lead">Collaborate with other privte members</p>
+                <p class="lead">One time payment of only <strong>$15</strong></p>
+                <form class="text-center" action="/users/<%=currentUser.id%>/upgrade" method="POST">
+                  <article label="Amount: $15.00"></article>
+                  <script
+                  src="//checkout.stripe.com/v2/checkout.js" class="stripe-button"
+                  data-key="<%=keyPublishable%>"
+                  data-amount="1500"
+                  data-description="Premium Membership"
+                  data-locale="auto">
+                  </script>
+              </form>
+              <% } else if (currentUser.role == 1) { %>
+              <header class="jumbotron my-5">
+                <p class="lead">You are already a Premium Member</p>
+                <form class="text-center" action="/users/<%=currentUser.id%>/downgrade" method="POST">
+                    <button type="submit" class="btn btn-primary">Downgrade</button>
+                </form>
+              </header>
+            <% } %>
+          <% } %>
+      </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>
