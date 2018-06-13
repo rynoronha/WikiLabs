@@ -11,12 +11,19 @@
         <h1>Wikis</h1>
         <% if(currentUser) { %>
           <a href="/wikis/new" class="btn btn-success">New Wiki</a>
+
+          <% if(currentUser.role !== 0) { %>
+            <a href="/wikis/private" class="btn btn-info">Private Wikis</a>
+          <% } %>
+
         <% } %>
 
         <ul class="list-group">
 
           <% wikis.forEach((wiki) => { %>
+            <% if(wiki.private === false) { %>
             <li class="list-group-item">
+
               <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
               <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.isAdmin())) { %>
                   <span class="float-right"><a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</span></a>
@@ -25,6 +32,8 @@
                   </form>
               <% } %>
             </li>
+
+            <% } %>
           <% }) %>
         </ul>
 

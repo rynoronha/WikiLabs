@@ -65,6 +65,7 @@ module.exports = {
        }
        const authorized = new Authorizer(req.user, wiki).update();
        if(authorized) {
+         console.log("updatedWiki :" + req.body.private);
          wiki.update(updatedWiki, {
            fields: Object.keys(updatedWiki)
          })
@@ -79,6 +80,28 @@ module.exports = {
          callback("Forbidden");
        }
      });
-   }
+   },
+
+   makePublic(id){
+    return Wiki.all()
+    .then((wikis) => {
+      wikis.forEach((wiki) => {
+        if(wiki.userId == id && wiki.private == true) {
+          wiki.update({
+            private: false
+          })
+          .then(() => {
+
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
+      });
+    })
+    .catch((err) => {
+    console.log(err);
+    })
+  }
 
 }

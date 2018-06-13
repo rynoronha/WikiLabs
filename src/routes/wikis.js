@@ -5,6 +5,7 @@ const validation = require("./validation");
 const helper = require("../auth/helpers");
 
 router.get("/wikis", wikiController.index);
+router.get("/wikis/private", wikiController.indexPrivate)
 router.get("/wikis/new", wikiController.new);
 router.post("/wikis/create", helper.ensureAuthenticated, validation.validateWikis, wikiController.create);
 router.get("/wikis/:id", wikiController.show);

@@ -14,6 +14,16 @@ module.exports = {
     })
   },
 
+  indexPrivate(req, res, next){
+    wikiQueries.getAllWikis((err, wikis) => {
+      if(err){
+        res.redirect(500, "static/index");
+      } else {
+        res.render("wikis/indexPrivate", {wikis});
+      }
+    })
+  },
+
   new(req, res, next){
     const authorized = new Authorizer(req.user).new();
     if(authorized) {
@@ -84,6 +94,7 @@ module.exports = {
 
   update(req, res, next){
     wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+      console.log("req.body: " + req.body.private);
       if(err || wiki == null){
         res.redirect(401, `/wikis/${req.params.id}/edit`);
       } else {

@@ -1,4 +1,5 @@
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js");
 const passport = require("passport");
 const keySecret = process.env.SECRET_KEY;
 const keyPublishable = process.env.PUBLISHABLE_KEY;
@@ -56,7 +57,6 @@ module.exports = {
 
   upgrade(req, res, next){
     res.render("users/upgrade", {keyPublishable});
-    console.log("keyPublishable " + keyPublishable);
   },
 
   payment(req, res, next){
@@ -75,14 +75,17 @@ module.exports = {
     })
     .then((charge) => {
       userQueries.upgrade(req.user.id);
-      console.log("req.user.id " + req.user.id);
       res.render("users/success");
     });
   },
 
+  downgradeWarning(req, res, next){
+    res.render("users/downgrade");
+  },
+
   downgrade(req, res, next){
-    console.log("req.user.id " + req.user.id);
     userQueries.downgrade(req.user.id);
+    wikiQueries.makePublic(req.user.id);
     req.flash("notice", "You have successfully downgraded");
     res.redirect("/");
   }

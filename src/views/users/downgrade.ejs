@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <% include ../static/partials/head.ejs %>
+
+  </head>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+        <% include ../static/partials/messages.ejs %>
+        <% if(currentUser) { %>
+            <% if(currentUser.role == 1) { %>
+              <header class="jumbotron my-5">
+                <h3 class="display-4">Are you sure you want to downgrade?</h1>
+                <p class="lead"><strong>Warning: All your private wikis will become public</strong></p>
+                <div class="span2 text-center">
+                  <form class="text-center" action="/users/<%=currentUser.id%>/downgrade" method="POST">
+                      <button type="submit" class="btn btn-danger btn-block">Yes, downgrade</button>
+                  </form>
+                  <a href="/" class="btn btn-secondary btn-block">No, I've changed my mind</a>
+                </div>
+            <% } %>
+          <% } %>
+      </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>
