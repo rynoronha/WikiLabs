@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     password: {
      type: DataTypes.STRING,
      allowNull: false
-   },
-   role: {
+    },
+    role: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Wiki, {
        foreignKey: "userId",
        as: "wikis"
+    });
+    User.hasMany(models.Collaborator, {
+      foreignKey: 'userId',
+      as: 'collaborators'
     });
   };
 
