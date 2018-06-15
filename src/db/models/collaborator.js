@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
 
-    Collaborator.addScope('collabsFor', (wikiId) => {
+    Collaborator.addScope('collaboratorsFor', (wikiId) => {
        return {
          include: [{
            model: models.User

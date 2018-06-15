@@ -58,8 +58,10 @@ module.exports = {
   },
 
   show(req, res, next){
-    wikiQueries.getWiki(req.params.id, (err, wiki) => {
+    wikiQueries.getWiki(req.params.id, (err, result) => {
+      wiki = result["wiki"];
       if(err || wiki == null){
+        console.log("Will 404...");
         res.redirect(404, "/");
       } else {
         wiki.body = markdown.toHTML(wiki.body);
@@ -79,7 +81,8 @@ module.exports = {
   },
 
   edit(req, res, next){
-    wikiQueries.getWiki(req.params.id, (err, wiki) => {
+    wikiQueries.getWiki(req.params.id, (err, result) => {
+      wiki = result["wiki"];
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
