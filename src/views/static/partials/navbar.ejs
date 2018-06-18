@@ -38,11 +38,11 @@
         <% if(currentUser) { %>
             <% if(currentUser.role == 0) { %>
            <li class="nav-item">
-             <a class="nav-link" href="/users/upgrade">Upgrade to Premium</a>
+             <a class="nav-link" href="/users/upgrade">Upgrade</a>
            </li>
            <% } else if(currentUser.role == 1) { %>
             <li class="nav-item">
-              <a class="nav-link" href="/users/downgrade">Downgrade to Standard</a>
+              <a class="nav-link" href="/users/downgrade">Downgrade</a>
             </li>
             <% } %>
            <li class="nav-item">

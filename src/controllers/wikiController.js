@@ -83,12 +83,13 @@ module.exports = {
   edit(req, res, next){
     wikiQueries.getWiki(req.params.id, (err, result) => {
       wiki = result["wiki"];
+      collaborators = result["collaborators"];
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
         const authorized = new Authorizer(req.user, wiki).edit();
         if(authorized){
-          res.render("wikis/edit", {wiki});
+          res.render("wikis/edit", {wiki, collaborators});
         } else {
           req.flash("You are not authorized to do that.")
           res.redirect(`/wikis/${req.params.id}`)
