@@ -28,15 +28,17 @@
         <div class="form-group">
           <label for="private">Would you like to make this a private wiki?</label>
           <select class="form-control" name="private">
-            <option value='false'>Public</option>
             <option value='true'>Private</option>
+            <option value='false'>Public</option>
           </select>
         </div>
         <% } %>
 
 
         <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Edit Collaborators</a>
       </form>
+
 
     </main>
 

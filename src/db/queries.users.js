@@ -23,12 +23,10 @@ module.exports = {
         html: '<strong>Please login to your account to start creating wikis!</strong>',
       };
       sgMail.send(msg);
-      console.log("hello");
       callback(null, user);
     })
     .catch((err) => {
       console.log('error', error);
-      console.log("hello");
       callback(err);
     })
   },

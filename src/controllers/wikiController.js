@@ -87,7 +87,7 @@ module.exports = {
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
-        const authorized = new Authorizer(req.user, wiki).edit();
+        const authorized = new Authorizer(req.user, wiki, collaborators).edit();
         if(authorized){
           res.render("wikis/edit", {wiki, collaborators});
         } else {
@@ -100,7 +100,6 @@ module.exports = {
 
   update(req, res, next){
     wikiQueries.updateWiki(req, req.body, (err, wiki) => {
-      console.log("req.body: " + req.body.private);
       if(err || wiki == null){
         res.redirect(401, `/wikis/${req.params.id}/edit`);
       } else {

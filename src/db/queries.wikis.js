@@ -77,7 +77,6 @@ module.exports = {
        }
        const authorized = new Authorizer(req.user, wiki).update();
        if(authorized) {
-         console.log("updatedWiki :" + req.body.private);
          wiki.update(updatedWiki, {
            fields: Object.keys(updatedWiki)
          })

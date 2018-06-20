@@ -20,8 +20,8 @@
                 <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
 
                 <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.isAdmin())) { %>
-                    <span class="float-right"><a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</span></a>
-                    <span class="float-right"><a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Collaborators</span></a>
+                    <span class="float-right"><a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a></span>
+                    <span class="float-right"><a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-info">Collaborators</a></span>
                     <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
                      <span class="float-right"><button type="submit" class="btn btn-danger">Delete</button></span>
                     </form>

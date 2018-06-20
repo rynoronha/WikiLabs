@@ -18,8 +18,7 @@ module.exports = {
   },
 
   edit(req, res, next){
-    wikiQueries.getWiki(req.params.id, (err, result) => {
-      console.log(result);
+    wikiQueries.getWiki(req.params.wikiId, (err, result) => {
       wiki = result["wiki"];
       collaborators = result["collaborators"];
       if(err || wiki == null){
