@@ -23,7 +23,7 @@ module.exports = class ApplicationPolicy {
   }
 
   _isCollaborator() {
-    for (i = 0; i < this.collaborators.length; i++) {
+    for (let i = 0; i < this.collaborators.length; i++) {
       if (this.user.id == this.collaborators[i].userId) {
         return true;
       }
@@ -52,11 +52,6 @@ module.exports = class ApplicationPolicy {
     }
   }
 
-  editPrivate() {
-    return this.new() &&
-      this.record && ((this._isOwner() && this._isPremium()) || this._isCollaborator() || this._isAdmin());
-  }
-
   update() {
     return this.edit();
   }
@@ -64,6 +59,10 @@ module.exports = class ApplicationPolicy {
   destroy() {
     return this.update() &&
       this.record && (this._isOwner() || this._isAdmin());
+  }
+
+  showCollaboration() {
+    return this.edit();
   }
 
 }

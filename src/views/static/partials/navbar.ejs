@@ -9,19 +9,29 @@
         <% if(currentUser) { %>
           <% if(currentUser.role == 0) { %>
             <li class="nav-item">
-             <a class="nav-link text-white" href="/wikis"><%= currentUser.name %></a>
+             <a class="nav-link text-success" href="/wikis"><%= currentUser.name %> (Standard)</a>
             </li>
           <% } else if(currentUser.role == 1) { %>
             <li class="nav-item">
              <a class="nav-link text-warning" href="/wikis"><%= currentUser.name %> (Premium)</a>
+            </li>
+          <% } else if(currentUser.role == 2) { %>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/wikis"><%= currentUser.name %> (Admin)</a>
             </li>
           <% } %>
         <% } %>
 
         <% if(currentUser) { %>
           <% if(currentUser.role == 0) { %>
-            <li class="nav-item">
-             <a class="nav-link" href="/wikis">Wikis</a>
+            <li class="nav-item dropdown">
+             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Wikis
+             </a>
+             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/wikis">Public</a>
+              <a class="dropdown-item" href="/users/collaborations">Collaborations</a>
+            </div>
             </li>
           <% } else if(currentUser.role != 0) { %>
             <li class="nav-item dropdown">
@@ -31,6 +41,7 @@
              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/wikis">Public</a>
               <a class="dropdown-item" href="/wikis/private">Private</a>
+              <a class="dropdown-item" href="/users/collaborations">Collaborations</a>
             </div>
             </li>
           <% } %>

@@ -55,7 +55,7 @@ module.exports = {
   remove(req, callback){
     let collabId = req.body.collaborator;
     let wikiId = req.params.wikiId;
-    const authorized = new Authorizer(req.user, wiki).destroy();
+    const authorized = new Authorizer(req.user, wiki, collabId).destroy();
     if(authorized){
       Collaborator.destroy({ where: {
         userId : collabId,

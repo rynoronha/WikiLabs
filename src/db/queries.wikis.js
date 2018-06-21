@@ -44,6 +44,7 @@ module.exports = {
           callback(null, result);
         })
         .catch((err) => {
+          console.log(err);
           callback(err);
         })
       }

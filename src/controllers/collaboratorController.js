@@ -24,12 +24,12 @@ module.exports = {
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
-        const authorized = new Authorizer(req.user, wiki).edit();
+        const authorized = new Authorizer(req.user, wiki, collaborators).edit();
         if(authorized){
           res.render("collaborators/edit", {wiki, collaborators});
         } else {
-          req.flash("You are not authorized to do that.")
-          res.redirect(`/wikis/${req.params.id}`)
+          req.flash("notice", "You are not authorized to do that.")
+          res.redirect(`/wikis/${req.params.wikiId}`)
         }
       }
     });
